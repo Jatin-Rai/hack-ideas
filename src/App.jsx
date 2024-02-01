@@ -1,10 +1,9 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChallengeForm, ChallengeList } from "./components";
 import { Row, Col, Container, Navbar, Form, Button } from "react-bootstrap";
 
 const App = () => {
-  // Default challenge with array of challenges
   const defaultChallenges = [
     {
       title: 'Build a Real-time Chat Application',
@@ -22,12 +21,19 @@ const App = () => {
     },
   ];
 
-  const [challenges, setChallenges] = useState(defaultChallenges);
+  // Load challenges from localStorage or use defaultChallenges if not present
+  const initialChallenges = JSON.parse(localStorage.getItem('challenges')) || defaultChallenges;
+
+  const [challenges, setChallenges] = useState(initialChallenges);
   const [employeeId, setEmployeeId] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
 
-  // Add some sample employee IDs for demonstration purposes
-  const validEmployeeIds = ['123', '456', '789'];
+  const validEmployeeIds = ['123', '456', '789', '111', '222', '333'];
+
+  useEffect(() => {
+    // Save challenges to localStorage whenever the challenges state changes
+    localStorage.setItem('challenges', JSON.stringify(challenges));
+  }, [challenges]);
 
   const handleAddChallenge = (newChallenge) => {
     setChallenges([...challenges, newChallenge]);
@@ -46,7 +52,7 @@ const App = () => {
     const sortedChallenges = [...challenges].sort((a, b) => {
       if (sortBy === 'votes') return b.votes - a.votes;
       if (sortBy === 'createdAt') return new Date(b.createdAt) - new Date(a.createdAt);
-      return 0; // Default return value
+      return 0;
     });
     setChallenges(sortedChallenges);
   };
@@ -59,7 +65,6 @@ const App = () => {
     }
   };
 
-  // If not logged in, show the login form
   if (!loggedIn) {
     return (
       <Container className='mb-5'>
@@ -84,11 +89,10 @@ const App = () => {
             </Button>
           </Form>
         </Container>
-      </Container >
+      </Container>
     );
   }
 
-  // If logged in, show the main application content
   return (
     <Container className='mb-5'>
       <Navbar className="bg-body-tertiary">
