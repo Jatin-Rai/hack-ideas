@@ -11,7 +11,7 @@ const App = () => {
   const initialEmployeeId = employeeIdFromLocalStorage || '';
   const initialLoggedInStatus = localStorage.getItem('loggedIn') === 'true';
   const initialChallenges = JSON.parse(localStorage.getItem('challenges')) || challengesData;
-  
+
   const [challenges, setChallenges] = useState(initialChallenges);
   const [employeeId, setEmployeeId] = useState(initialEmployeeId);
   const [loggedIn, setLoggedIn] = useState(initialLoggedInStatus);
@@ -58,22 +58,28 @@ const App = () => {
     }
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleLogin();
+    }
+  }
 
   const handleLogout = () => {
     setLoggedIn(false);
   }
-  
+
 
   if (!loggedIn) {
     return (
-      <Container className='mb-5'>
+      <>
         <Navbar className="bg-body-tertiary">
           <Container>
             <Navbar.Brand>Welcome to Hack Ideas</Navbar.Brand>
           </Container>
         </Navbar>
-        <Container>
-          <Form className='mt-3'>
+        <Container className='d-flex justify-content-center mt-5'>
+          <Form>
+            <h2 className='mb-5'>Employee Login</h2>
             <Form.Group controlId='formEmployeeId'>
               <Form.Label>Employee ID:</Form.Label>
               <Form.Control
@@ -81,19 +87,21 @@ const App = () => {
                 placeholder='Enter your employee ID'
                 value={employeeId}
                 onChange={(e) => setEmployeeId(e.target.value)}
+                onKeyDown={handleKeyPress}
               />
             </Form.Group>
-            <Button className='mt-3' variant='primary' onClick={handleLogin}>
+            <Button className='mt-3 w-100' variant='primary' onClick={handleLogin}>
               Log In
             </Button>
           </Form>
         </Container>
-      </Container>
+      </>
+
     );
   }
 
   return (
-    <Container className='mb-5'>
+    <>
       <Navbar className="bg-body-tertiary">
         <Container>
           <Navbar.Brand>Hack Ideas</Navbar.Brand>
@@ -101,7 +109,7 @@ const App = () => {
           <Button variant='secondary' onClick={handleLogout}>Logout</Button>
         </Container>
       </Navbar>
-      <Container>
+      <Container className='mb-5'>
         <Row className='mt-3'>
           <Col md={8}>
             <ChallengeList challenges={challenges} onVote={handleVote} onSort={handleSort} />
@@ -111,7 +119,7 @@ const App = () => {
           </Col>
         </Row>
       </Container>
-    </Container>
+    </>
   );
 };
 

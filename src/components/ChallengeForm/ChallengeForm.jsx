@@ -49,7 +49,7 @@ const ChallengeForm = ({ onAddChallenge }) => {
           <Form.Label>Tags:</Form.Label>
           <Form.Control type="text" value={tags} onChange={(e) => setTags(e.target.value)} placeholder='Enter Tags(comma separated)' />
         </Form.Group>
-        <Button variant="primary" className='mt-3' onClick={handleAddChallenge}>
+        <Button variant="primary" className='mt-3 w-100' onClick={handleAddChallenge}>
           Add Challenge
         </Button>
       </Form>
