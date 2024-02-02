@@ -77,5 +77,4 @@ describe("App component", () => {
     expect(getByText(/Log In/i)).toBeInTheDocument();
   });
 
-  // Add more tests for ChallengeList and ChallengeForm interactions
 });
