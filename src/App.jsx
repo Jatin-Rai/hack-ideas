@@ -1,36 +1,20 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { ChallengeForm, ChallengeList } from "./components";
+import { challengesData } from './mockdata/challengesData';
+import { validEmployeeIds } from './mockdata/validEmployeeIds';
 import { Row, Col, Container, Navbar, Form, Button } from "react-bootstrap";
 
 const App = () => {
-  const defaultChallenges = [
-    {
-      title: 'Build a Real-time Chat Application',
-      description: 'Create a chat app with real-time messaging using React and WebSocket.',
-      tags: ['tech', 'feature'],
-      votes: 5,
-      createdAt: '2023-01-02T12:30:00Z',
-    },
-    {
-      title: 'Design a Creative Landing Page',
-      description: 'Design an eye-catching landing page for a fictional product or service.',
-      tags: ['design', 'feature'],
-      votes: 8,
-      createdAt: '2023-01-01T10:00:00Z',
-    },
-  ];
-
-  const validEmployeeIds = ['123', '456', '789', '111', '222', '333'];
 
   // Load challenges from localStorage or use defaultChallenges if not present
-  const initialChallenges = JSON.parse(localStorage.getItem('challenges')) || defaultChallenges;
+  const initialChallenges = JSON.parse(localStorage.getItem('challenges')) || challengesData;
+
 
   
   const [challenges, setChallenges] = useState(initialChallenges);
   const [employeeId, setEmployeeId] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
-
 
   useEffect(() => {
     // Save challenges to localStorage whenever the challenges state changes

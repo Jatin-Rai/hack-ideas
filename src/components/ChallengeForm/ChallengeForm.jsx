@@ -31,17 +31,17 @@ const ChallengeForm = ({ onAddChallenge }) => {
 
   return (
     <>
-      <h2 className='mb-3'>Add New Challenge</h2>
+      <h2 className='mt-3'>Add New Challenge</h2>
       <Form>
-        <Form.Group controlId="formTitle">
+        <Form.Group className='mt-3' controlId="formTitle">
           <Form.Label>Title:</Form.Label>
           <Form.Control type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder='Enter Title' />
         </Form.Group>
-        <Form.Group controlId="formDescription">
+        <Form.Group className='mt-3' controlId="formDescription">
           <Form.Label>Description:</Form.Label>
           <Form.Control as="textarea" value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Enter Description' />
         </Form.Group>
-        <Form.Group controlId="formTags">
+        <Form.Group className='mt-3' controlId="formTags">
           <Form.Label>Tags:</Form.Label>
           <Form.Control type="text" value={tags} onChange={(e) => setTags(e.target.value)} placeholder='Enter Tags(comma separated)' />
         </Form.Group>
