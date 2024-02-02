@@ -3,11 +3,14 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 
+
 const ChallengeForm = ({ onAddChallenge }) => {
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [tags, setTags] = useState('');
 
+//Function to add challenges
   const handleAddChallenge = () => {
     if (!title || !description || !tags) {
       alert('Please fill in all fields.');
@@ -28,6 +31,7 @@ const ChallengeForm = ({ onAddChallenge }) => {
 
     onAddChallenge(newChallenge);
   };
+  
 
   return (
     <>
