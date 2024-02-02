@@ -23,12 +23,11 @@ const mockChallenges = [
 ];
 
 
-const { getByText, getByTestId } = render(
-    <ChallengeList challenges={mockChallenges} onVote={mockOnVote} onSort={mockOnSort} />
-);
-
 
 test("Renders ChallengeList component with list of challenges", () => {
+    const { getByText, getByTestId } = render(
+        <ChallengeList challenges={mockChallenges} onVote={mockOnVote} onSort={mockOnSort} />
+    );
 
     expect(getByText("Test Challenge 1")).toBeInTheDocument();
     expect(getByText("Test Challenge 2")).toBeInTheDocument();
@@ -59,11 +58,20 @@ test("Renders ChallengeList component with list of challenges", () => {
 
 
 test("Handles upvote button click", () => {
-    const upvoteButton = getByText(/Upvote/i);
-
+    const { queryAllByText } = render(
+      <ChallengeList challenges={mockChallenges} onVote={mockOnVote} onSort={mockOnSort} />
+    );
+  
+    // Find all elements with the text "Upvote"
+    const upvoteButtons = queryAllByText(/Upvote/i);
+  
+    // Assuming you want to click the upvote button for the first challenge
+    const upvoteButtonForFirstChallenge = upvoteButtons[0];
+  
     act(() => {
-        fireEvent.click(upvoteButton);
+      fireEvent.click(upvoteButtonForFirstChallenge);
     });
-
+  
+    // Ensure onVote is called with the correct challenge
     expect(mockOnVote).toHaveBeenCalledWith(mockChallenges[0]);
-});
+  });

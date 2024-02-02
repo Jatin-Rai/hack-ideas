@@ -59,7 +59,7 @@ describe("App component", () => {
   });
 
   test("Handles logout", () => {
-    const { getByText } = render(<App />);
+    const { getByText, getByLabelText } = render(<App />);
 
     // Log in first
     act(() => {

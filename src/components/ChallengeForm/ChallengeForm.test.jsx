@@ -5,11 +5,24 @@ import ChallengeForm from "./ChallengeForm";
 // Mock the onAddChallenge function
 const mockOnAddChallenge = jest.fn();
 
-const { getByLabelText, getByText } = render(
-  <ChallengeForm onAddChallenge={mockOnAddChallenge} />
-);
+// Mock window.alert
+const alertSpy = jest.spyOn(window, 'alert');
+
+beforeEach(() => {
+  // Clear mock function and reset mock for window.alert before each test
+  jest.clearAllMocks();
+  alertSpy.mockClear();
+});
+
+afterAll(() => {
+  // Restore original implementation of window.alert after all tests
+  alertSpy.mockRestore();
+});
 
 test("Handles adding a new challenge", () => {
+  const { getByLabelText, getByText } = render(
+    <ChallengeForm onAddChallenge={mockOnAddChallenge} />
+  );
 
   // Fill in the form fields
   act(() => {
@@ -39,6 +52,12 @@ test("Handles adding a new challenge", () => {
 });
 
 test("Handles adding a new challenge with empty fields", () => {
+  const { getByText } = render(
+    <ChallengeForm onAddChallenge={mockOnAddChallenge} />
+  );
+
+  // Mock window.alert before clicking the "Add Challenge" button
+  jest.spyOn(window, 'alert').mockImplementation(() => {});
 
   // Click the "Add Challenge" button without filling in any fields
   act(() => {
