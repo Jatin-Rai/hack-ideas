@@ -7,23 +7,28 @@ import { Row, Col, Container, Navbar, Form, Button } from "react-bootstrap";
 
 const App = () => {
 
-  // Load challenges from localStorage or use defaultChallenges if not present
+  const employeeIdFromLocalStorage = localStorage.getItem('employeeId');
+  const initialEmployeeId = employeeIdFromLocalStorage || '';
+  const initialLoggedInStatus = localStorage.getItem('loggedIn') === 'true';
   const initialChallenges = JSON.parse(localStorage.getItem('challenges')) || challengesData;
-
-
   
   const [challenges, setChallenges] = useState(initialChallenges);
-  const [employeeId, setEmployeeId] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [employeeId, setEmployeeId] = useState(initialEmployeeId);
+  const [loggedIn, setLoggedIn] = useState(initialLoggedInStatus);
 
   useEffect(() => {
-    // Save challenges to localStorage whenever the challenges state changes
+
+    localStorage.setItem('employeeId', employeeId);
+    localStorage.setItem('loggedIn', loggedIn);
     localStorage.setItem('challenges', JSON.stringify(challenges));
-  }, [challenges]);
+
+  }, [challenges, loggedIn]);
+
 
   const handleAddChallenge = (newChallenge) => {
     setChallenges([...challenges, newChallenge]);
   };
+
 
   const handleVote = (selectedChallenge) => {
     const updatedChallenges = challenges.map((challenge) =>
@@ -34,6 +39,7 @@ const App = () => {
     setChallenges(updatedChallenges);
   };
 
+
   const handleSort = (sortBy) => {
     const sortedChallenges = [...challenges].sort((a, b) => {
       if (sortBy === 'votes') return b.votes - a.votes;
@@ -43,13 +49,20 @@ const App = () => {
     setChallenges(sortedChallenges);
   };
 
+
   const handleLogin = () => {
     if (validEmployeeIds.includes(employeeId)) {
-      setLoggedIn(prev => !prev);
+      setLoggedIn(true);
     } else {
       alert('Invalid employee ID. Please try again.');
     }
   };
+
+
+  const handleLogout = () => {
+    setLoggedIn(false);
+  }
+  
 
   if (!loggedIn) {
     return (
@@ -85,7 +98,7 @@ const App = () => {
         <Container>
           <Navbar.Brand>Hack Ideas</Navbar.Brand>
           <Navbar.Text>Employee ID: {employeeId}</Navbar.Text>
-          <Button variant='secondary' onClick={handleLogin}>Logout</Button>
+          <Button variant='secondary' onClick={handleLogout}>Logout</Button>
         </Container>
       </Navbar>
       <Container>
