@@ -21,14 +21,16 @@ const App = () => {
     },
   ];
 
+  const validEmployeeIds = ['123', '456', '789', '111', '222', '333'];
+
   // Load challenges from localStorage or use defaultChallenges if not present
   const initialChallenges = JSON.parse(localStorage.getItem('challenges')) || defaultChallenges;
 
+  
   const [challenges, setChallenges] = useState(initialChallenges);
   const [employeeId, setEmployeeId] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const validEmployeeIds = ['123', '456', '789', '111', '222', '333'];
 
   useEffect(() => {
     // Save challenges to localStorage whenever the challenges state changes

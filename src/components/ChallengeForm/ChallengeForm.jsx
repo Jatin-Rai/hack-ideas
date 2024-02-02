@@ -30,7 +30,7 @@ const ChallengeForm = ({ onAddChallenge }) => {
   };
 
   return (
-    <div>
+    <>
       <h2 className='mb-3'>Add New Challenge</h2>
       <Form>
         <Form.Group controlId="formTitle">
@@ -49,7 +49,7 @@ const ChallengeForm = ({ onAddChallenge }) => {
           Add Challenge
         </Button>
       </Form>
-    </div>
+    </>
   );
 };
 
